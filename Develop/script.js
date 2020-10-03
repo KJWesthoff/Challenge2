@@ -80,15 +80,16 @@ var generatePassword = function () {
     
   base_s = del_repeated_char(base_s);
   console.log(base_s); 
-  // ----------------------------------------------------------------
-  // build the password using random charaters from the base_s string
-  // ----------------------------------------------------------------
+
+  // ------------------------------------------------------------------------------
+  // build the password using random charaters from the base_s string and return it
+  // ------------------------------------------------------------------------------
+
   var pw = "";
   for (i = 0; i < pw_len; i++) {
     var idx = Math.floor(Math.random() * base_s.length);
     pw += base_s[idx];
   }
-
 
   return pw;
 };
