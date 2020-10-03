@@ -23,45 +23,66 @@ var generatePassword = function () {
   // Ask user for charcters
   //-----------------------
   
+  // inline function to remove repeated characters
+  // if last index = index then the character is unique
 
-  // build a string of characters to use in the pw (base_s).
+  var del_repeated_char = function(str){
+    var res_str  = "";  
+    for(var i = 0 ; i < str.length; i++){
+      //debugger;
+      if (str.lastIndexOf(str[i]) === i){
+        //console.log(str[i]);
+        res_str += str[i];
+      }
+    }
+    //console.log(res_str);
+    return res_str;
+  }
+
+  // Initialize a string of characters to use for the pw (base_s).
   var base_s = "";
   
 
-  // I choose lowercase, uppercase, numeric, and/or special characters
-  
-    if (window.confirm("Include lowercase a-z?")){
-      base_s += "abcdefghijklmnopqrstuvwxyz";
-    }
+  // User selects lowercase, uppercase, numeric, and/or special characters
+  var enough = false;
+    while(!enough){
 
-    if (window.confirm("Include Uppercase A-Z?")){
-      base_s += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    }
+      if (window.confirm("Include lowercase a-z?")){
+        base_s += "abcdefghijklmnopqrstuvwxyz";
+      }
 
-    if (window.confirm("Include Numbers 0-9?")){
-      base_s += "0123456789";
-    }
+      if (window.confirm("Include Uppercase A-Z?")){
+        base_s += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      }
 
-    if (window.confirm("include special chacters?")){
-      if (window.confirm("Happy with these?: !\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~")){
-          base_s += "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
+      if (window.confirm("Include Numbers 0-9?")){
+        base_s += "0123456789";
+      }
+
+      if (window.confirm("include special chacters?")){
+        if (window.confirm("Happy with these?: !\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~")){
+            base_s += "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
+        } else {
+          custom_chars = window.prompt("Type special characters")
+          
+          // if charcters are repeated - make sure they only occur once
+          custom_chars = del_repeated_char(custom_chars);
+          base_s += custom_chars;
+        }
+      }
+      if(base_s.length>4){
+        enough = true;
       } else {
-        custom_chars = window.prompt("Type special characters")
-        // if charcters are repeated - mak sure they only occur once
-        // if chacaters are alreary included above - disregard them and alert user  
-        
-        
-        base_s += custom_chars;
+        window.alert("Not enough characters")
       }
     }
-    
   
-  console.log(base_s) 
-
-
-  //var base_s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
+    
+  base_s = del_repeated_char(base_s);
+  console.log(base_s); 
+  // ----------------------------------------------------------------
   // build the password using random charaters from the base_s string
+  // ----------------------------------------------------------------
   var pw = "";
   for (i = 0; i < pw_len; i++) {
     var idx = Math.floor(Math.random() * base_s.length);
