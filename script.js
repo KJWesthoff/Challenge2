@@ -79,6 +79,7 @@ var generatePassword = function () {
   
     
   base_s = del_repeated_char(base_s);
+  console.log("Password of length: " + pw_len + " generated from following characters:");
   console.log(base_s); 
 
   // ------------------------------------------------------------------------------
